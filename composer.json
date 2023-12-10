@@ -1,0 +1,7 @@
+{
+    "require": {
+        "openswoole/core": "^22.1",
+        "fakerphp/faker": "^1.23",
+        "league/csv": "^9.12"
+    }
+}
