@@ -3,9 +3,20 @@
  * Use curl to login to wiki.kenny.click
  * Maintain the session to browse the page.
  */
-$url = "https://wiki.kenny.click";
+$url = "https://auth.nbnco.net.au/okta/login";
 $user = "";
 $pass = "";
+
+
+$header = [];
+$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
+$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
+$header[] = "Cache-Control: max-age=0";
+$header[] = "Connection: keep-alive";
+$header[] = "Keep-Alive: 300";
+$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
+$header[] = "Accept-Language: en-us,en;q=0.5";
+$header[] = "Pragma: "; // browsers keep this blank.
 
 /// Initial the session
 $ch = curl_init();
@@ -13,23 +24,17 @@ $ch = curl_init();
 // set URL and other appropriate options
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_VERBOSE, 1);
-
-$headers = [
-    'X-Apple-Tz: 0',
-    'X-Apple-Store-Front: 143444,12',
-    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Encoding: gzip, deflate',
-    'Accept-Language: en-US,en;q=0.5',
-    'Cache-Control: no-cache',
-    'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
-    'Host: www.example.com',
-    'Referer: http://www.example.com/index.php', // Your referrer address
-    'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:28.0) Gecko/20100101 Firefox/28.0',
-    'X-MicrosoftAjax: Delta=true'
-];
+curl_setopt($ch, CURLOPT_COOKIESESSION, 1);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+//curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 
 // grab URL and pass it to the browser
-curl_exec($ch);
+$html = curl_exec($ch);
+if(curl_error($ch)) {
+    print curl_error($ch);
+} else print_r($html);
 
 // close cURL resource, and free up system resources
 curl_close($ch);
