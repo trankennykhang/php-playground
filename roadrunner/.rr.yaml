@@ -1,13 +1,11 @@
-version: '3'
-
-rpc:
-  listen: tcp://127.0.0.1:6001
-
+version: "3"
 server:
   command: "php worker.php"
-
+  relay: tcp://127.0.0.1:6002
 http:
-  address: "0.0.0.0:8050"
+  address: 127.0.0.1:8083
 
+# do not use development mode in production
 logs:
-  level: error
+  level: debug
+  mode: development

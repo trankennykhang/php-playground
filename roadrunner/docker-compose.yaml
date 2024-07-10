@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    ports:
+        #host:container port
+      - "8033:80"
+    volumes:
+      - ./:/var/www/html

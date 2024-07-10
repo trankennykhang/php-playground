@@ -1,0 +1,8 @@
+{
+    "require": {
+        "spiral/roadrunner-cli": "^2.6",
+        "nyholm/psr7": "^1.8",
+        "spiral/roadrunner": "^2024.1",
+        "spiral/roadrunner-http": "^3.5"
+    }
+}
