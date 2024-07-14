@@ -1,9 +1,9 @@
 version: "3"
 server:
   command: "php worker.php"
-  relay: tcp://127.0.0.1:6002
+ # relay: tcp://127.0.0.1:6002
 http:
-  address: 127.0.0.1:8083
+  address: 127.0.0.1:8080
 
 # do not use development mode in production
 logs:
