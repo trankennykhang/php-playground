@@ -1,7 +1,7 @@
 version: "3"
 server:
   command: "php worker.php"
- # relay: tcp://127.0.0.1:6002
+  relay: tcp://127.0.0.1:6002
 http:
   address: 0.0.0.0:8080
 
