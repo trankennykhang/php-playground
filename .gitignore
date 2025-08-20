@@ -3,3 +3,4 @@
 composer.lock
 /.vscode/
 /.idea/
+/roadrunner/vendor/
