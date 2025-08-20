@@ -1,6 +1,5 @@
 /vendor
-/vendor/
 composer.lock
 /.vscode/
 /.idea/
-/roadrunner/vendor/
+/roadrunner/vendor
