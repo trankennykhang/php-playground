@@ -11,14 +11,14 @@ declare(strict_types=1);
  */
 
 // ---- Configuration ----
-$DB_HOST   = getenv('DB_HOST')   ?: 'localhost';
+$DB_HOST   = getenv('DB_HOST')   ?: '127.0.0.1';
 $DB_NAME   = getenv('DB_NAME')   ?: 'big_test_db';
 $DB_USER   = getenv('DB_USER')   ?: 'admin';
 $DB_PASS   = getenv('DB_PASS')   ?: 'admin';
-$DB_TABLE  = getenv('DB_TABLE')  ?: 'user'; // Table must have columns: Name, Dob, Email, City, Country, Sex
+$DB_TABLE  = getenv('DB_TABLE')  ?: 'user2'; // Table must have columns: Name, Dob, Email, City, Country, Sex
 
-$TOTAL_ROWS = (int)(getenv('TOTAL_ROWS') ?: 30_000_000); // total rows to insert
-$BATCH_SIZE = (int)(getenv('BATCH_SIZE') ?: 10_000);     // rows per INSERT
+$TOTAL_ROWS = (int)(getenv('TOTAL_ROWS') ?: 500_000); // total rows to insert
+$BATCH_SIZE = (int)(getenv('BATCH_SIZE') ?: 20_000);     // rows per INSERT
 $DISABLE_CHECKS = filter_var(getenv('DISABLE_CHECKS') ?: '1', FILTER_VALIDATE_BOOL); // temporarily disable FK/unique checks for speed
 
 // ---- Safety & runtime ----
@@ -103,6 +103,7 @@ $options = [
 ];
 try {
     $pdo = new PDO($dsn, $DB_USER, $DB_PASS, $options);
+    
 } catch (Throwable $e) {
     fwrite(STDERR, "Connection failed: " . $e->getMessage() . PHP_EOL);
     exit(1);
@@ -153,6 +154,8 @@ for ($batch = 0; $batch < $totalBatches; $batch++) {
     }
 
     // Insert batch inside a transaction
+    //$pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, 0);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
     $pdo->beginTransaction();
     try {
         $sql = "INSERT INTO `{$DB_TABLE}` (`Name`, `Dob`, `Email`, `City`, `Country`, `Sex`) VALUES " . implode(',', $placeholders);
