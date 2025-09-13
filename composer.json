@@ -4,7 +4,10 @@
         "league/csv": "^9.12",
         "symfony/console": "^6.4",
         "revolt/event-loop": ">=v1.0.7",
-        "symfony/polyfill-mbstring": ">=v1.32.0"
+        "symfony/polyfill-mbstring": ">=v1.32.0",
+        "spiral/roadrunner-cli": "^2.7",
+        "spiral/roadrunner-http": "^3.6",
+        "nyholm/psr7": "^1.8"
     },
     "require-dev": {
         "phparkitect/phparkitect": "^0.3.25",
