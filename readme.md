@@ -1,0 +1,1 @@
+run ./vendor/bin/rr get-binary
