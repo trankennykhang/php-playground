@@ -2,22 +2,22 @@ version: '3'
 rpc:
     listen: 'tcp://127.0.0.1:6001'
 server:
-    command: 'php app.php'
+    command: 'php websocket/http_worker.php'
     relay: pipes
 http:
     address: '0.0.0.0:8080'
-    middleware:
-        - gzip
-        - static
-    static:
-        dir: public
-        forbid:
-            - .php
-            - .htaccess
-    pool:
-        num_workers: 1
-        supervisor:
-            max_worker_memory: 100
+#    middleware:
+#        - gzip
+#        - static
+#    static:
+#        dir: public
+#        forbid:
+#            - .php
+#            - .htaccess
+#    pool:
+#        num_workers: 1
+#        supervisor:
+#            max_worker_memory: 100
 jobs:
     pool:
         num_workers: 2

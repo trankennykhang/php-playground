@@ -1,13 +1,14 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Nyholm\Psr7\Response;
+use Nyholm\Psr7\ServerRequest;
 use Nyholm\Psr7\Factory\Psr17Factory;
 
 use Spiral\RoadRunner\Worker;
 use Spiral\RoadRunner\Http\PSR7Worker;
-
+use Slim\Factory\AppFactory;
 
 // Create new RoadRunner worker from global environment
 $worker = Worker::create();
@@ -24,6 +25,12 @@ $factory = new Psr17Factory();
 //
 $psr7 = new PSR7Worker($worker, $factory, $factory, $factory);
 
+$app = AppFactory::create();
+
+$app->get('/kenny', function (ServerRequest $request, Response $response, $args) {
+    $response->getBody()->write("Hello world Kenny!");
+    return $response;
+});
 while (true) {
     try {
         $request = $psr7->waitRequest();
@@ -42,16 +49,16 @@ while (true) {
         // Here is where the call to your application code will be located. 
         // For example:
         //
-        //  $response = $app->send($request);
+        $response = $app->handle($request);
         //
         // Reply by the 200 OK response
-        $psr7->respond(new Response(200, [], 'Hello RoadRunner!'));
+        $psr7->respond($response);
     } catch (\Throwable $e) {
         // In case of any exceptions in the application code, you should handle
         // them and inform the client about the presence of a server error.
         //
         // Reply by the 500 Internal Server Error response
-        $psr7->respond(new Response(500, [], 'Something Went Wrong!'));
+        $psr7->respond(new Response(500, [], $e->getMessage()));
 
         // Additionally, we can inform the RoadRunner that the processing 
         // of the request failed.
